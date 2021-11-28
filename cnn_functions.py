@@ -78,7 +78,6 @@ def max_pooling(image, kernel, stride):
     # start the pooling
     result = []
     for row_start in range(image_height - kernel_height + 1)[::stride_height]:
-        print(image_height - kernel_height + 1, row_start)
         row_result = []
         for col_start in range(image_width - kernel_width + 1)[::stride_width]:
             subarea = image[row_start:row_start + kernel_height][:, col_start:col_start + kernel_width]
@@ -102,7 +101,6 @@ def average_pooling(image, kernel, stride):
     # start the pooling
     result = []
     for row_start in range(image_height - kernel_height + 1)[::stride_height]:
-        print(image_height - kernel_height + 1, row_start)
         row_result = []
         for col_start in range(image_width - kernel_width + 1)[::stride_width]:
             subarea = image[row_start:row_start + kernel_height][:, col_start:col_start + kernel_width]

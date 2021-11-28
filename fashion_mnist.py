@@ -64,7 +64,6 @@ class MediumModel(torch.nn.Module):
             ("output_layer", nn.Linear(80, 10))
         ]))
 
-    # define a fully connected hidden layer block
     def forward(self, x):
         return self.m(x)
 
@@ -233,30 +232,40 @@ def main():
 # Feedback
 ############################################################
 
+# [1 points] What were the two classes that one of your models confused the most?
+#
+# [1 points] Describe your architecture for the Advanced Model.
+#
+# [1 point] Approximately how many hours did you spend on this assignment?
+#
+# [1 point] Which aspects of this assignment did you find most challenging? Were there any significant stumbling blocks?
+#
+# [1 point] Which aspects of this assignment did you like? Is there anything you would have changed?
+
 feedback_question_1 = """
-Type your response here.
-Your response may span multiple lines.
-Do not include these instructions in your response.
+Classes like shirt and T-shirt
 """
 
 feedback_question_2 = """
-Type your response here.
-Your response may span multiple lines.
-Do not include these instructions in your response.
+I first added a dropout to prevent over-fitting.
+Then I used two convolutional blocks (convolutional layer + relu + bn), which is typical in building CNN.
+Then I used an avg pooling to reduce size.
+Finally it goes through 2 fully connected layer blocks (fully connected + relu + bn).
 """
 
-feedback_question_3 = 0
+feedback_question_3 = 5
 
 feedback_question_4 = """
-Type your response here.
-Your response may span multiple lines.
-Do not include these instructions in your response.
+The autograder is not working.
+Training CNN could be relatively slow. 
 """
 
 feedback_question_5 = """
-Type your response here.
-Your response may span multiple lines.
-Do not include these instructions in your response.
+I like the assignment in general, which also includes the confusion matrix stuff. 
+The assignment could have instructed us to split into train and test in the beginning.
+The assignment also could have explained different types of activation functions, 
+as opposed to just asking for implementing sigmoid function without any explanations and connections
+to CNN.
 """
 
 if __name__ == '__main__':
