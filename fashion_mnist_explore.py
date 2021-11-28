@@ -128,6 +128,7 @@ def train(model, data_loader, num_epochs, learning_rate):
 def evaluate(model, data_loader):
     """
     evaluate on all the train data
+    TODO: perform train val test split and train only on train and validate on val
     :param model:
     :param data_loader:
     :return:
