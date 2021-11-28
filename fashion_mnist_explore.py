@@ -1,29 +1,13 @@
-############################################################
-# CIS 521: Neural Network for Fashion MNIST Dataset
-############################################################
-
-student_name = "Yuchen Zhang"
-
-############################################################
-# Imports
-############################################################
-
 import torch
 import numpy as np
 from torch.utils.data import Dataset
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
 import matplotlib.pyplot as plt
 import itertools
-
-# Include your imports here, if any are used.
 import pandas as pd
 from torch import nn
 import collections
 
-
-############################################################
-# Neural Networks
-############################################################
 
 def load_data(file_path, reshape_images):
     df = pd.read_csv(file_path)
@@ -34,7 +18,10 @@ def load_data(file_path, reshape_images):
     return features, label
 
 
-# PART 2.2
+############################################################
+# Neural Networks
+############################################################
+
 class EasyModel(torch.nn.Module):
     def __init__(self):
         super(EasyModel, self).__init__()
@@ -44,7 +31,7 @@ class EasyModel(torch.nn.Module):
         return self.fc(x)
 
 
-# PART 2.3
+# helper function 1
 def fc_bn_relu(input_dim, output_dim):
     # use ReLu before bn
     return nn.Sequential(collections.OrderedDict([
@@ -68,7 +55,7 @@ class MediumModel(torch.nn.Module):
         return self.m(x)
 
 
-# PART 2.4
+# helper function 2
 def conv_bn(ci, co, ksz, s=1, pz=0):
     return nn.Sequential(collections.OrderedDict([
         ("conv", nn.Conv2d(in_channels=ci, out_channels=co, kernel_size=ksz, stride=s, padding=pz)),
@@ -204,69 +191,23 @@ def main():
     easy_model = EasyModel()
     train(easy_model, data_loader, num_epochs, learning_rate)
     y_true_easy, y_pred_easy = evaluate(easy_model, data_loader)
-    print(f'Easy Model: '
-          f'Final Train Accuracy: {100. * accuracy_score(y_true_easy, y_pred_easy):.4f},',
-          f'Final Train F1 Score: {100. * f1_score(y_true_easy, y_pred_easy, average="weighted"):.4f}')
+    print(evaluation_scores(y_true_easy, y_pred_easy, "Easy Model"))
     plot_confusion_matrix(confusion_matrix(y_true_easy, y_pred_easy), class_names, 'Easy Model')
 
     # MEDIUM MODEL
     medium_model = MediumModel()
     train(medium_model, data_loader, num_epochs, learning_rate)
     y_true_medium, y_pred_medium = evaluate(medium_model, data_loader)
-    print(f'Medium Model: '
-          f'Final Train Accuracy: {100. * accuracy_score(y_true_medium, y_pred_medium):.4f},',
-          f'Final F1 Score: {100. * f1_score(y_true_medium, y_pred_medium, average="weighted"):.4f}')
+    print(evaluation_scores(y_true_medium, y_pred_medium, "Medium Model"))
     plot_confusion_matrix(confusion_matrix(y_true_medium, y_pred_medium), class_names, 'Medium Model')
 
     # ADVANCED MODEL
     advanced_model = AdvancedModel()
     train(advanced_model, data_loader_reshaped, num_epochs, learning_rate)
     y_true_advanced, y_pred_advanced = evaluate(advanced_model, data_loader_reshaped)
-    print(f'Advanced Model: '
-          f'Final Train Accuracy: {100. * accuracy_score(y_true_advanced, y_pred_advanced):.4f},',
-          f'Final F1 Score: {100. * f1_score(y_true_advanced, y_pred_advanced, average="weighted"):.4f}')
+    print(evaluation_scores(y_true_advanced, y_pred_advanced, "Advanced Model"))
     plot_confusion_matrix(confusion_matrix(y_true_advanced, y_pred_advanced), class_names, 'Advanced Model')
 
-
-############################################################
-# Feedback
-############################################################
-
-# [1 points] What were the two classes that one of your models confused the most?
-#
-# [1 points] Describe your architecture for the Advanced Model.
-#
-# [1 point] Approximately how many hours did you spend on this assignment?
-#
-# [1 point] Which aspects of this assignment did you find most challenging? Were there any significant stumbling blocks?
-#
-# [1 point] Which aspects of this assignment did you like? Is there anything you would have changed?
-
-feedback_question_1 = """
-Classes like shirt and T-shirt
-"""
-
-feedback_question_2 = """
-I first added a dropout to prevent over-fitting.
-Then I used two convolutional blocks (convolutional layer + relu + bn), which is typical in building CNN.
-Then I used an avg pooling to reduce size.
-Finally it goes through 2 fully connected layer blocks (fully connected + relu + bn).
-"""
-
-feedback_question_3 = 5
-
-feedback_question_4 = """
-The autograder is not working.
-Training CNN could be relatively slow. 
-"""
-
-feedback_question_5 = """
-I like the assignment in general, which also includes the confusion matrix stuff. 
-The assignment could have instructed us to split into train and test in the beginning.
-The assignment also could have explained different types of activation functions, 
-as opposed to just asking for implementing sigmoid function without any explanations and connections
-to CNN.
-"""
 
 if __name__ == '__main__':
     main()

@@ -13,6 +13,8 @@
 _sandbox.ipynb
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
+cnn_functions.py
+fashion_mnist.py
 
 # IPython
 profile_default/

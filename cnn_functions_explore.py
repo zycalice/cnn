@@ -1,21 +1,4 @@
-############################################################
-# CIS 521: Individual Functions for CNN
-############################################################
-
-student_name = "Yuchen Zhang"
-
-############################################################
-# Imports
-############################################################
-
-# Include your imports here, if any are used.
-
 import numpy as np
-
-
-############################################################
-# Individual Functions
-############################################################
 
 
 def add_padding(image, num=1):
@@ -107,7 +90,3 @@ def average_pooling(image, kernel, stride):
             row_result.append(np.mean(subarea))
         result.append(row_result)
     return np.array(result)
-
-
-def sigmoid(x):
-    return 1/(1+np.exp(-x))
