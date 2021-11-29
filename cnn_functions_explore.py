@@ -1,14 +1,16 @@
 import numpy as np
 
 
-def add_padding(image, num=1):
+def add_padding(image, kernel):
+    kernel_height, kernel_width = kernel.shape
+
     # get vertical zeros and concatenate
-    vertical_zeros = np.zeros((len(image), num))
+    vertical_zeros = np.zeros((len(image), kernel_width//2))
     padded_image = np.concatenate((vertical_zeros, image), axis=1)
     padded_image = np.concatenate((padded_image, vertical_zeros), axis=1)
 
     # get  horizontal zeros and concatenate
-    horizontal_zeros = np.zeros((num, len(padded_image[0])))
+    horizontal_zeros = np.zeros((kernel_height//2, len(padded_image[0])))
     padded_image = np.concatenate((horizontal_zeros, padded_image), axis=0)
     padded_image = np.concatenate((padded_image, horizontal_zeros), axis=0)
     return padded_image
@@ -21,13 +23,15 @@ def convolve_greyscale(image, kernel):
     :param kernel:  (kernel_height, kernel_width)
     :return:
     """
+    print(image, kernel)
+    kernel_height, kernel_width = kernel.shape
     kernel_flip = np.fliplr(np.flipud(kernel))
-    padded_image = add_padding(image)
+    padded_image = add_padding(image, kernel)
     result = np.zeros(image.shape)
 
     for i in range(len(image)):
         for j in range(len(image[0])):
-            result[i][j] = np.sum(kernel_flip * padded_image[i:i + 3][:, j:j + 3])
+            result[i][j] = np.sum(kernel_flip * padded_image[i:i + kernel_height][:, j:j + kernel_width])
 
     return result
 
